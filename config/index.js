@@ -23,6 +23,7 @@ module.exports = {
 
   github: {
     client_id: '89eea4cf93edd3a92a89',
+    callback: 'http://localhost:3000/auth/github/callback',
     secret: '0bcfd54ac2fa732ddc38e80e6bbb280892bb16ac'
   },
 

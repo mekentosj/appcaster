@@ -4,7 +4,7 @@
   "description": "A service for Sparkle releases",
   "main": "server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha -t 0 test/init.js test/**/*_test.js"
   },
   "keywords": [
     "mac",

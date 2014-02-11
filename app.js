@@ -1,3 +1,4 @@
+var errors = require('./errors');
 var express = require('express');
 var expressLayouts = require('express-ejs-layouts');
 var app = express();
@@ -7,7 +8,10 @@ var middleware = require('./middleware');
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 
-app.use(express.logger());
+app.configure('development', 'production', 'staging', function() {
+  app.use(express.logger());
+});
+
 app.use(express.static('public'));
 app.use(express.cookieParser());
 app.use(express.bodyParser());
@@ -31,13 +35,12 @@ function userFromGitHub(profile) {
 passport.use(new GitHubStrategy({
   clientID: config.github.client_id,
   clientSecret: config.github.secret,
-  callbackURL: 'http://localhost:3000/auth/github/callback'
+  callbackURL: config.github.callback
 }, function(accessToken, refreshToken, profile, done) {
   if (config.users.github.indexOf(profile.username) !== -1) {
-    console.log('User signed in');
     done(null, userFromGitHub(profile));
   } else {
-    done(new Error('User not authorized'));
+    done(new errors.AuthError('User not authorized'));
   }
 }));
 
@@ -66,11 +69,16 @@ app.get('/apps/:id/appcast.xml', routes.apps.show);
 app.get('/apps/:id/download/:version', routes.apps.download);
 app.get('/apps/:id/release-notes/:version', routes.apps.releaseNotes);
 
-app.get('/admin', routes.admin.index);
+app.all('/admin/*', middleware.requiresUser);
+app.get('/admin', middleware.redirectIfSignedIn, routes.admin.index);
 app.post('/admin/session', routes.admin.session.create);
 app.get('/admin/session/error', routes.admin.session.error);
 app.get('/admin/apps', routes.admin.apps.index);
 app.get('/admin/apps/:id', routes.admin.apps.show);
 app.patch('/admin/apps/:id', routes.admin.apps.patch);
+
+app.use(function(err, req, res, next) {
+  res.send(err.statusCode);
+});
 
 module.exports = app;

@@ -1,6 +1,6 @@
 module.exports = {
   index: function(req, res, next) {
-    res.send('No apps yet');
+    res.render('admin/apps/index', { flash: req.flash() });
   },
 
   patch: function(req, res, next) {
