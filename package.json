@@ -1,0 +1,28 @@
+{
+  "name": "appcast",
+  "version": "0.0.0",
+  "description": "A service for Sparkle releases",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "mac",
+    "windows",
+    "sparkle",
+    "releases"
+  ],
+  "author": "Alex R. Young",
+  "license": "MIT",
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "supertest": "~0.9.0"
+  },
+  "dependencies": {
+    "express": "~3.4.8",
+    "passport": "~0.2.0",
+    "passport-github": "~0.1.5",
+    "ejs": "~0.8.5",
+    "express-ejs-layouts": "~0.3.1"
+  }
+}
