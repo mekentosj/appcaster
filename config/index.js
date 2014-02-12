@@ -21,6 +21,8 @@ module.exports = {
     }
   },
 
+  database: 'postgres://papers:test@localhost/appcaster',
+
   github: {
     client_id: '89eea4cf93edd3a92a89',
     callback: 'http://localhost:3000/auth/github/callback',

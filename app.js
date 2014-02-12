@@ -7,6 +7,7 @@ var routes = require('./routes');
 var middleware = require('./middleware');
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
+var db = require('./db');
 
 app.configure('development', 'production', 'staging', function() {
   app.use(express.logger());
