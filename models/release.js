@@ -3,7 +3,7 @@ var sql = require('sql');
 var Release = sql.define({
   name: 'releases',
   columns: [
-    { name: 'id', dataType: 'int', primaryKey: true },
+    { name: 'id', dataType: 'serial', primaryKey: true },
     { name: 'app_id', dataType: 'int references apps(id)' },
     { name: 'filename', dataType: 'varchar(100)' },
     { name: 'identifier', dataType: 'varchar(100)' },

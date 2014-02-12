@@ -10,7 +10,6 @@ exports.up = function(next){
 
 exports.down = function(next){
   db.query(models.Channel.drop().toQuery(), function(err, result) {
-    if (err) throw err;
-    next();
+    next(err);
   });
 };

@@ -28,6 +28,8 @@
     "express-ejs-layouts": "~0.3.1",
     "pg": "~2.11.1",
     "sql": "~0.35.0",
-    "migrate": "~0.1.4"
+    "migrate": "~0.1.4",
+    "bcrypt": "~0.7.7",
+    "async": "~0.2.10"
   }
 }

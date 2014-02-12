@@ -3,7 +3,7 @@ var sql = require('sql');
 var Channel = sql.define({
   name: 'channels',
   columns: [
-    { name: 'id', dataType: 'int', primaryKey: true },
+    { name: 'id', dataType: 'serial', primaryKey: true },
     { name: 'url_slug', dataType: 'varchar(30) NOT NULL' },
     { name: 'title', dataType: 'varchar(200) NOT NULL' },
     { name: 'language', dataType: 'varchar(10) NOT NULL' },
