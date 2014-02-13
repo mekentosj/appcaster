@@ -1,15 +1,15 @@
 var db = require('./../db');
-var models = require('./../models');
+var schema = require('./../models').Build.schema;
 
 exports.up = function(next){
-  db.query(models.Release.create().toQuery(), function(err, result) {
+  db.query(schema.create().toQuery(), function(err, result) {
     if (err) throw err;
     next();
   });
 };
 
 exports.down = function(next){
-  db.query(models.Release.drop().toQuery(), function(err, result) {
+  db.query(schema.drop().toQuery(), function(err, result) {
     next(err);
   });
 };

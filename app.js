@@ -60,12 +60,14 @@ function authSuccess(req, res) {
 }
 
 app.get('/auth/github/callback',
-  passport.authenticate('github', { failureRedirect: '/admin/session/error' }),
+  passport.authenticate('github', {
+    failureRedirect: '/admin/session/error'
+  }),
   authSuccess
 );
 
-app.post('/apps/:id', routes.apps.create);
-app.get('/apps/:id/appcast.xml', routes.apps.show);
+app.post('/apps/:url_id/builds', middleware.apiAuth(), routes.builds.create);
+app.get('/apps/:url_id/:channel/appcast.xml', routes.apps.show);
 
 app.get('/apps/:id/download/:version', routes.apps.download);
 app.get('/apps/:id/release-notes/:version', routes.apps.releaseNotes);

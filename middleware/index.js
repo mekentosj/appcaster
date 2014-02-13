@@ -1,9 +1,25 @@
+var Client = require('./../models').Client;
+var express = require('express');
 var errors = require('./../errors');
 var config = require('./../config');
 var Middleware;
 
 module.exports = Middleware = {
   flash: require('./flash'),
+
+  apiAuth: function() {
+    return express.basicAuth(function(httpUser, httpPassword, next) {
+      Client.auth(httpUser, httpPassword, function(err, user) {
+        if (err) {
+          next(err);
+        } else if (user) {
+          next(null, user);
+        } else {
+          next();
+        }
+      });
+    });
+  },
 
   redirectIfSignedIn: function(req, res, next) {
     Middleware.requiresUser(req, res, function(err) {

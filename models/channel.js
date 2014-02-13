@@ -1,6 +1,10 @@
 var sql = require('sql');
 
-var Channel = sql.define({
+function Channel() {
+  this.schema = Channel.schema;
+}
+
+Channel.schema = sql.define({
   name: 'channels',
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },

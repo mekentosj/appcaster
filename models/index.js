@@ -1,7 +1,7 @@
 module.exports = {
   App: require('./app'),
+  Build: require('./build'),
   Channel: require('./channel'),
   Client: require('./client'),
-  Release: require('./release'),
-  ReleasedApp: require('./released_app')
+  Release: require('./release')
 };

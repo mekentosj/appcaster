@@ -2,6 +2,7 @@ var assert = require('assert');
 var async = require('async');
 var fs = require('fs');
 var migrate = require('migrate');
+var seed = require('./seed');
 
 function migrations() {
   return fs.readdirSync('migrations').filter(function(file){
@@ -22,7 +23,10 @@ function prepareDb(cb) {
     async.eachSeries(migrations(), function(migration, next) {
       require(migration).up(next);
     }, function() {
-      cb();
+      seed(function(err) {
+        if (err) throw err;
+        cb();
+      });
     });
   });
 }
