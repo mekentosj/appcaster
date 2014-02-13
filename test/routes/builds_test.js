@@ -46,4 +46,11 @@ describe('build routes', function() {
       .send(makeBuildFields())
       .expect(401, done);
   });
+
+  it('should reject requests with no credentials', function(done) {
+    request(app)
+      .post('/apps/papers/builds')
+      .send(makeBuildFields())
+      .expect(401, done);
+  });
 });

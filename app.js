@@ -13,10 +13,13 @@ app.configure('development', 'production', 'staging', function() {
   app.use(express.logger());
 });
 
+app.locals = require('./helpers');
+
 app.use(express.static('public'));
-app.use(express.cookieParser());
 app.use(express.bodyParser());
-app.use(express.session({ secret: 'mottainai kara' }));
+app.use(express.methodOverride());
+app.use(express.cookieParser());
+app.use(express.cookieSession({ secret: 'Gorm Quarterly' }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(middleware.flash);
@@ -72,16 +75,21 @@ app.get('/apps/:url_id/:channel/appcast.xml', routes.apps.show);
 app.get('/apps/:id/download/:version', routes.apps.download);
 app.get('/apps/:id/release-notes/:version', routes.apps.releaseNotes);
 
-app.all('/admin/*', middleware.requiresUser);
+app.all('/admin/*', middleware.requiresUser, middleware.navigation);
 app.get('/admin', middleware.redirectIfSignedIn, routes.admin.index);
 app.post('/admin/session', routes.admin.session.create);
 app.get('/admin/session/error', routes.admin.session.error);
 app.get('/admin/apps', routes.admin.apps.index);
+app.post('/admin/apps', routes.admin.apps.create);
+app.get('/admin/apps/new', routes.admin.apps.new);
 app.get('/admin/apps/:id', routes.admin.apps.show);
 app.patch('/admin/apps/:id', routes.admin.apps.patch);
 
 app.use(function(err, req, res, next) {
-  res.send(err.statusCode);
+  if (process.env.NODE_ENV !== 'test') {
+    console.error(err);
+  }
+  res.send(err.statusCode || 500);
 });
 
 module.exports = app;

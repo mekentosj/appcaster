@@ -33,10 +33,24 @@ module.exports = Middleware = {
 
   checkUser: function(req, res, next) {
     if (config.users.github.indexOf(req.session.passport.user.username) !== -1) {
+      res.locals.user = req.session.passport.user;
       next();
     } else {
       next(new errors.AuthError('Not authorized for this service'));
     }
+  },
+
+  navigation: function(req, res, next) {
+    res.locals.nav = function(page) {
+      return res.locals._currentPage.match(page) ? ' class="active"' : '';
+    };
+
+    res.nav = function(page) {
+      res.locals._currentPage = page;
+    };
+
+    res.locals._currentPage = req.path;
+    next();
   },
 
   requiresUser: function(req, res, next) {

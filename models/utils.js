@@ -10,7 +10,14 @@ function findOne(query, cb) {
   });
 }
 
+function findAll(query, cb) {
+  db.query(query.text, function(err, result) {
+    cb(err, result && result.rows ? result.rows : null);
+  });
+}
+
 module.exports = {
+  findAll: findAll,
   findOne: findOne,
   firstResult: firstResult
 };

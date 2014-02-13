@@ -5,9 +5,13 @@
   <title>Appcast Admin</title>
   <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  <link href="/css/admin.css" rel="stylesheet">
 </head>
 <body>
-  <% include flash %>
-  <%- body %>
+  <% include header %>
+  <div class="container">
+    <% include flash %>
+    <%- body %>
+  </div>
 </body>
 </html>

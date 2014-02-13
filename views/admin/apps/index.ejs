@@ -1,1 +1,3 @@
-<p>No apps yet!</p>
+<p><a href="/admin/apps/new" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add app</a></p>
+
+<%- bootstrap.table(apps, ['name', 'url_id', { name: 'Options', value: function(app) { return '<a href="/admin/apps/' + app.id + '" class="btn btn-default">Edit</a>'; } }]) %>

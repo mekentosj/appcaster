@@ -4,7 +4,7 @@
   "description": "A service for Sparkle releases",
   "main": "server.js",
   "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha -t 0 test/init.js test/**/*_test.js",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha -t 0 test/init.js test/**/*_test.js test/*/**/*_test.js",
     "migrate": "./node_modules/.bin/migrate up",
     "migrate_create": "./node_modules/.bin/migrate create"
   },
@@ -30,6 +30,7 @@
     "sql": "~0.35.0",
     "migrate": "~0.1.4",
     "bcrypt": "~0.7.7",
-    "async": "~0.2.10"
+    "async": "~0.2.10",
+    "moment": "~2.5.1"
   }
 }

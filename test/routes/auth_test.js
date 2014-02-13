@@ -2,8 +2,6 @@ var app = require('./../../app');
 var request = require('supertest');
 
 describe('Authenticated sessions', function() {
-  var cookies;
-
   it('should allow specific GitHub members to sign in', function(done) {
     request(app)
       .get('/admin/apps')
