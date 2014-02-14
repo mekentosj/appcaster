@@ -2,12 +2,17 @@ var assert = require('assert');
 var app = require('./../../app');
 var request = require('supertest');
 
+var lastVersion = 16;
+
 function makeBuildFields() {
+  lastVersion++;
+
   return {
+    app_id: 1,
     filename: 'papers.dmg',
     identifier: 'id-1234',
-    version: '3.1.18',
-    version_string: '3.1.18 Lunar Edition',
+    version: '3.1.' + lastVersion,
+    version_string: '3.1.' + lastVersion + ' Lunar Edition',
     minimum_system_version: 'Mac OS X 10.8',
     length: 123456,
     download_url: 'http://aws.example.com/id-1234/papers.dmg',

@@ -18,7 +18,8 @@ var builds = [{
   minimum_system_version: 'Mac OS 10.8.2',
   length: 123456,
   download_url: 'https://example.com/papers-abc.dmg',
-  signature: 'kxajfqhofk32fmpanc'
+  signature: 'kxajfqhofk32fmpanc',
+  notes: 'This should be _Markdown_'
 }];
 
 var clients = [

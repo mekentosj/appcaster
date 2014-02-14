@@ -1,4 +1,6 @@
 var Appcast = require('./../models').Appcast;
+var Build = require('./../models').Build;
+var marked = require('marked');
 
 module.exports = {
   create: function(req, res, next) {
@@ -9,8 +11,6 @@ module.exports = {
       app_url: req.param('url_slug'),
       channel_url: req.param('channel_url_slug')
     }, function(err, appcast) {
-      var release_notes_url = 'TODO';
-
       if (!appcast) {
         return res.send(200);
       }
@@ -18,12 +18,13 @@ module.exports = {
       res.set('Content-Type', 'application/xml');
 
       res.render('appcast', {
+        appcast: appcast,
         app: appcast.app,
         builds: appcast.builds,
         channel: appcast.channel,
         layout: false,
-        release_notes_url: release_notes_url,
-        url: res.url
+        url: req.url,
+        urlRoot: req.protocol + '://' + req.hostname
       });
     });
   },
@@ -32,5 +33,20 @@ module.exports = {
   },
 
   releaseNotes: function(req, res, next) {
+    Appcast.findBuildByVersion({
+      app_url: req.param('url_slug'),
+      channel_url: req.param('channel_url_slug'),
+      version: req.param('version')
+    }, function(err, appcast) {
+      if (!appcast || !appcast.build) {
+        res.send(404);
+      }
+
+      res.render('release_notes', {
+        build: appcast.build,
+        notes: marked(appcast.build.notes),
+        layout: false
+      });
+    });
   }
 };

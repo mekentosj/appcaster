@@ -13,4 +13,14 @@ describe('build routes', function() {
         done();
       });
   });
+
+  it('should serve up release notes', function(done) {
+    request(app)
+      .get('/apps/papers/test-abc/release-notes/3.2.14.html')
+      .expect(200)
+      .end(function(err, res) {
+        assert(res.text);
+        done();
+      });
+  });
 });

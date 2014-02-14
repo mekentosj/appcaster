@@ -12,10 +12,10 @@ Build.schema = sql.define({
   name: 'builds',
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },
-    { name: 'app_id', dataType: 'int references apps(id)' },
+    { name: 'app_id', dataType: 'int references apps(id) NOT NULL' },
     { name: 'filename', dataType: "varchar(100) NOT NULL CHECK (filename <> '')" },
     { name: 'identifier', dataType: "varchar(100) NOT NULL CHECK (identifier <> '')" },
-    { name: 'version', dataType: "varchar(20) NOT NULL CHECK (version <> '')" },
+    { name: 'version', dataType: "varchar(20) NOT NULL CHECK (version <> ''), CONSTRAINT unique_version_and_app UNIQUE (app_id, version)" },
     { name: 'version_string', dataType: 'varchar(100)' },
     { name: 'minimum_system_version', dataType: 'varchar(20)' },
     { name: 'length', dataType: 'bigint NOT NULL' },
@@ -92,6 +92,24 @@ Build.update = function(fields, cb) {
   var query = this.schema.update(fields)
     .where(this.schema.id.equals(id))
     .returning('*').toQuery();
+
+  utils.findOne(query, cb);
+};
+
+Build.findForVersion = function(options, cb) {
+  var channel = options.channel;
+  var release = Release.schema;
+  var version = options.version;
+
+  var query = this.schema.select('builds.*')
+    .from(
+      this.schema.join(release)
+        .on(release.build_id.equals(this.schema.id)
+          .and(release.channel_id.equals(channel.id)))
+    )
+    .where(this.schema.version.equals(version))
+    .order('builds.publication_date DESC')
+    .toQuery();
 
   utils.findOne(query, cb);
 };
