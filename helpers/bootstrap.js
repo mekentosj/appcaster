@@ -38,7 +38,7 @@ module.exports = {
     var checkedAttribute = options.checked ? ' checked="checked"' : '';
     options.placeholder = options.placeholder || '';
     options.rows = options.rows || 4;
-    return ejs.render('<textarea id="<%= id %>" placeholder="<%= placeholder %>" rows="<%= rows %>" name="<%= name %>"' + checkedAttribute + disabledAttribute + readonlyAttribute + '><%= value || \'\' %></textarea>', options);
+    return ejs.render('<textarea class="form-control" id="<%= id %>" placeholder="<%= placeholder %>" rows="<%= rows %>" name="<%= name %>"' + checkedAttribute + disabledAttribute + readonlyAttribute + '><%= value || \'\' %></textarea>', options);
   },
 
   textInput: function(options) {
@@ -171,8 +171,8 @@ module.exports = {
 
   selectField: function(model, field, selectOptions, options) {
     options = options || {};
-    var id = options.id || model.daoFactory.name + '_' + field;
-    var name = model.daoFactory.name + '[' + field + ']';
+    var id = options.id;
+    var name = options.name + '[' + field + ']';
     var selected = model[field];
     var html = '<div class="control-group">';
 
@@ -246,8 +246,8 @@ module.exports = {
   },
 
   chosenSelect: function(model, field, options) {
-    var id = model.daoFactory.name + '_' + field;
-    var name = model.daoFactory.name + '[' + field + ']';
+    var id = options.name + '_' + field;
+    var name = options.name + '[' + field + ']';
     var selected = model[field] || [];
     var html = '<div class="control-group">';
     html += this.label({ html: humanizeField(field), id: id });
@@ -264,7 +264,7 @@ module.exports = {
     options = options || {};
 
     var html = '';
-    var modelName = options.name || model.daoFactory.name;
+    var modelName = options.name;
     var fieldName = modelName + '[' + field + ']';
     var id = modelName + '_' + field;
     var value = model[field] || '';

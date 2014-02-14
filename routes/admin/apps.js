@@ -16,7 +16,7 @@ module.exports = {
     App.create(req.body.app, function(err, app) {
       if (err) {
         res.flash.error('Error saving app');
-        next(err);
+        res.render('admin/apps/new', { flash: req.flash(), app: req.body.app });
       } else {
         res.flash.success('App saved');
         res.redirect('/admin/apps/' + app.id);
@@ -29,9 +29,13 @@ module.exports = {
     fields.id = req.param('id');
 
     App.update(fields, function(err, app) {
-      if (err) return next(err);
-      res.flash.success('App saved');
-      res.render('admin/apps/edit', { flash: req.flash(), app: app });
+      if (err) {
+        res.flash.error('Error saving app');
+        res.render('admin/apps/edit', { flash: req.flash(), app: fields });
+      } else {
+        res.flash.success('App saved');
+        res.render('admin/apps/edit', { flash: req.flash(), app: app });
+      }
     });
   },
 

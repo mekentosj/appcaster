@@ -5,13 +5,22 @@ var salt = bcrypt.genSaltSync(10);
 var hash = bcrypt.hashSync('password', salt);
 
 var apps = [
-  { url_id: 'papers', name: 'Papers for Mac' },
-  { url_id: 'pfw', name: 'Papers for Windows' }
+  { url_slug: 'papers', name: 'Papers for Mac' },
+  { url_slug: 'pfw', name: 'Papers for Windows' }
 ];
 
 var clients = [
   { name: 'gorm', hashed_password: hash }
 ];
+
+var channels = [{
+  app_id: 1,
+  url_slug: 'test-abc',
+  title: 'beta',
+  language: 'en',
+  platform: 'Mac OS X',
+  description: 'Alpha releases'
+}];
 
 function seedOne(rows, Model, cb) {
   async.eachSeries(rows, function(row, next) {
@@ -34,6 +43,7 @@ function seedMany(modelsAndRows, cb) {
 module.exports = function(cb) {
   seedMany([
     { rows: apps, model: models.App },
-    { rows: clients, model: models.Client }
+    { rows: clients, model: models.Client },
+    { rows: channels, model: models.Channel }
   ], cb);
 };

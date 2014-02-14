@@ -27,7 +27,7 @@ describe('app routes', function() {
   it('should allow apps to be created', function(done) {
     request(app)
       .post('/admin/apps')
-      .send({ app: { name: 'test', url_id: 'test1' } })
+      .send({ app: { name: 'test', url_slug: 'test1' } })
       .set('Cookie', app.get('test:cookies'))
       .expect(302, done)
   });
@@ -35,7 +35,7 @@ describe('app routes', function() {
   it('should allow apps to be updated', function(done) {
     request(app)
       .patch('/admin/apps/1')
-      .send({ app: { name: 'test', url_id: 'test1' } })
+      .send({ app: { name: 'test', url_slug: 'test1' } })
       .set('Cookie', app.get('test:cookies'))
       .expect(200, done)
   });

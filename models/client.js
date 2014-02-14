@@ -11,8 +11,8 @@ Client.schema = sql.define({
   name: 'clients',
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },
-    { name: 'name', dataType: 'varchar(100) NOT NULL', unique: true },
-    { name: 'hashed_password', dataType: 'varchar(100) NOT NULL' }
+    { name: 'name', dataType: "varchar(100) NOT NULL CHECK (name <> '')", unique: true },
+    { name: 'hashed_password', dataType: "varchar(100) NOT NULL CHECK (hashed_password <> '')" }
   ]
 });
 

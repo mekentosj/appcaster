@@ -10,8 +10,8 @@ App.schema = sql.define({
   name: 'apps',
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },
-    { name: 'url_id', dataType: 'varchar(20)', unique: true },
-    { name: 'name', dataType: 'varchar(100) NOT NULL' }
+    { name: 'url_slug', dataType: "varchar(20) NOT NULL CHECK (url_slug <> '')", unique: true },
+    { name: 'name', dataType: "varchar(100) NOT NULL CHECK (name <> '')" }
   ]
 });
 
@@ -28,9 +28,9 @@ App.findAll = function(cb) {
   utils.findAll(query, cb);
 };
 
-App.findByUrlId = function(urlId, cb) {
+App.findByUrlSlug = function(urlSlug, cb) {
   var query = this.schema.select('*')
-    .where(this.schema.url_id.equals(urlId))
+    .where(this.schema.url_slug.equals(urlSlug))
     .toQuery();
 
   utils.findOne(query, cb);

@@ -1,3 +1,4 @@
+var App = require('./../models').App;
 var Client = require('./../models').Client;
 var express = require('express');
 var errors = require('./../errors');
@@ -38,6 +39,18 @@ module.exports = Middleware = {
     } else {
       next(new errors.AuthError('Not authorized for this service'));
     }
+  },
+
+  loadAllApps: function(req, res, next) {
+    App.findAll(function(err, apps) {
+      if (err) return next(err);
+
+      res.locals.apps = apps.map(function(app) {
+        return [app.id, app.name];
+      });
+
+      next();
+    });
   },
 
   navigation: function(req, res, next) {

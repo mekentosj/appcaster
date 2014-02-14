@@ -3,6 +3,6 @@
 <form method="post" action="/admin/apps/<%= app.id %>" class="" role="form">
   <input type="hidden" name="_method" value="patch">
   <%- bootstrap.textField(app, 'name', { name: 'app', label: 'Name' }) %>
-  <%- bootstrap.textField(app, 'url_id', { name: 'app', label: 'URL fragment' }) %>
+  <%- bootstrap.textField(app, 'url_slug', { name: 'app', label: 'URL fragment' }) %>
   <button type="submit" class="btn btn-primary">Save changes</button>
 </form>
