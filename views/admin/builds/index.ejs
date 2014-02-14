@@ -1,0 +1,3 @@
+<p><a href="/admin/builds/new" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add build</a></p>
+
+<%- bootstrap.table(builds, [{ name: 'App', value: function(c) { return c.app_name; } }, 'filename', 'version_string', 'publication_date', { name: 'Options', value: function(c) { return '<a href="/admin/builds/' + c.id + '" class="btn btn-default">Edit</a>'; } }]) %>

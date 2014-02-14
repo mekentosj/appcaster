@@ -39,6 +39,7 @@ Channel.findAll = function(cb) {
   var app = App.schema;
   var query = this.schema.select('channels.*, apps.name AS app_name')
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
+    .order('channels.title')
     .toQuery();
 
   utils.findAll(query, cb);

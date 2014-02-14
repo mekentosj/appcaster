@@ -92,6 +92,12 @@ app.get('/admin/channels/new', middleware.loadAllApps, routes.admin.channels.new
 app.get('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.show);
 app.patch('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.patch);
 
+app.get('/admin/builds', routes.admin.builds.index);
+app.post('/admin/builds', middleware.loadAllApps, routes.admin.builds.create);
+app.get('/admin/builds/new', middleware.loadAllApps, routes.admin.builds.new);
+app.get('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.show);
+app.patch('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.patch);
+
 app.use(function(err, req, res, next) {
   if (process.env.NODE_ENV !== 'test') {
     console.error(err);

@@ -24,7 +24,7 @@ App.find = function(id, cb) {
 };
 
 App.findAll = function(cb) {
-  var query = this.schema.select('*').toQuery();
+  var query = this.schema.select('*').order('name').toQuery();
   utils.findAll(query, cb);
 };
 
