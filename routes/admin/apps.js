@@ -15,7 +15,7 @@ module.exports = {
   create: function(req, res, next) {
     App.create(req.body.app, function(err, app) {
       if (err) {
-        res.flash.error('Error saving app');
+        res.flash.error(err);
         res.render('admin/apps/new', { flash: req.flash(), app: req.body.app });
       } else {
         res.flash.success('App saved');
@@ -30,7 +30,7 @@ module.exports = {
 
     App.update(fields, function(err, app) {
       if (err) {
-        res.flash.error('Error saving app');
+        res.flash.error(err);
         res.render('admin/apps/edit', { flash: req.flash(), app: fields });
       } else {
         res.flash.success('App saved');

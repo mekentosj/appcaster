@@ -16,7 +16,7 @@ module.exports = {
   create: function(req, res, next) {
     Channel.create(req.body.channel, function(err, channel) {
       if (err) {
-        res.flash.error('Error saving channel');
+        res.flash.error(err);
         res.render('admin/channels/new', { flash: req.flash(), channel: req.body.channel });
       } else {
         res.flash.success('Channel saved');
@@ -31,7 +31,7 @@ module.exports = {
 
     Channel.update(fields, function(err, channel) {
       if (err) {
-        res.flash.error('Error saving channel');
+        res.flash.error(err);
         res.render('admin/channels/edit', { flash: req.flash(), channel: fields });
       } else {
         res.flash.success('Channel saved');
