@@ -35,6 +35,16 @@ Channel.find = function(id, cb) {
   utils.findOne(query, cb);
 };
 
+Channel.findByChannelUrlSlug = function(url, cb) {
+  var app = App.schema;
+  var query = this.schema.select('channels.*, apps.name AS app_name')
+    .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
+    .where(this.schema.url_slug.equals(url))
+    .toQuery();
+
+  utils.findOne(query, cb);
+};
+
 Channel.findAll = function(cb) {
   var app = App.schema;
   var query = this.schema.select('channels.*, apps.name AS app_name')

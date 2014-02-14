@@ -1,5 +1,6 @@
 var App = require('./app');
 var db = require('./../db');
+var Release = require('./release');
 var sql = require('sql');
 var utils = require('./utils');
 
@@ -60,6 +61,19 @@ Build.findAll = function(cb) {
   var app = App.schema;
   var query = this.schema.select('builds.*, apps.name AS app_name')
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
+    .order('builds.publication_date DESC')
+    .toQuery();
+
+  utils.findAll(query, cb);
+};
+
+Build.findAllForChannel = function(channel, cb) {
+  var release = Release.schema;
+  var query = this.schema.select('builds.*')
+    .from(
+      this.schema.join(release)
+        .on(release.build_id.equals(this.schema.id).and(release.channel_id.equals(channel.id)))
+    )
     .order('builds.publication_date DESC')
     .toQuery();
 

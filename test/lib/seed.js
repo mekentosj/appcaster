@@ -9,6 +9,18 @@ var apps = [
   { url_slug: 'pfw', name: 'Papers for Windows' }
 ];
 
+var builds = [{
+  app_id: 1,
+  filename: 'papers-abc.dmg',
+  identifier: 'papers-1',
+  version: '3.2.14',
+  version_string: '3.2.14 Starving Bear Edition',
+  minimum_system_version: 'Mac OS 10.8.2',
+  length: 123456,
+  download_url: 'https://example.com/papers-abc.dmg',
+  signature: 'kxajfqhofk32fmpanc'
+}];
+
 var clients = [
   { name: 'gorm', hashed_password: hash }
 ];
@@ -20,6 +32,11 @@ var channels = [{
   language: 'en',
   platform: 'Mac OS X',
   description: 'Alpha releases'
+}];
+
+var releases = [{
+  build_id: 1,
+  channel_id: 1
 }];
 
 function seedOne(rows, Model, cb) {
@@ -43,7 +60,9 @@ function seedMany(modelsAndRows, cb) {
 module.exports = function(cb) {
   seedMany([
     { rows: apps, model: models.App },
+    { rows: builds, model: models.Build },
     { rows: clients, model: models.Client },
-    { rows: channels, model: models.Channel }
+    { rows: channels, model: models.Channel },
+    { rows: releases, model: models.Release }
   ], cb);
 };

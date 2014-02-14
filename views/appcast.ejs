@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
+<channel>
+  <title><%= channel.title %></title>
+  <link><%= url %></link>
+  <description><%= channel.description %></description>
+  <language><%= channel.language %></language>
+  <% builds.forEach(function(build) { %>
+  <item>
+    <title><%= app.name %></title>
+    <sparkle:releaseNotesLink><%= release_notes_url %></sparkle:releaseNotesLink>
+    <sparkle:minimumSystemVersion><%= build.minimum_system_version %></sparkle:minimumSystemVersion>
+    <pubDate><%= build.publication_date %></pubDate>
+    <enclosure url="<%= build.download_url %>" sparkle:version="<%= build.version %>" sparkle:shortVersionString="<%= build.version_string %>" type="application/octet-stream" sparkle:dsaSignature=">%= build.signature %>" length="<%= build.length %>" />
+  </item>
+  <% }) %>
+</channel>
+</rss>

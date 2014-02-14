@@ -70,10 +70,10 @@ app.get('/auth/github/callback',
 );
 
 app.post('/apps/:url_slug/builds', middleware.apiAuth(), routes.builds.create);
-app.get('/apps/:url_slug/:channel/appcast.xml', routes.apps.show);
+app.get('/apps/:url_slug/:channel_url_slug/appcast.xml', routes.apps.show);
 
-app.get('/apps/:id/download/:version', routes.apps.download);
-app.get('/apps/:id/release-notes/:version', routes.apps.releaseNotes);
+app.get('/apps/:url_slug/download/:version', routes.apps.download);
+app.get('/apps/:url_slug/release-notes/:version', routes.apps.releaseNotes);
 
 app.all('/admin/*', middleware.requiresUser, middleware.navigation);
 app.get('/admin', middleware.redirectIfSignedIn, routes.admin.index);
@@ -99,7 +99,7 @@ app.get('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.show);
 app.patch('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.patch);
 
 app.use(function(err, req, res, next) {
-  if (process.env.NODE_ENV !== 'test') {
+  if (!err.statusCode) {
     console.error(err);
     console.error(err.stack);
   }
