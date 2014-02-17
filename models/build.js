@@ -1,3 +1,4 @@
+var async = require('async');
 var App = require('./app');
 var db = require('./../db');
 var Release = require('./release');
@@ -112,6 +113,57 @@ Build.findForVersion = function(options, cb) {
     .toQuery();
 
   utils.findOne(query, cb);
+};
+
+function addAndRemoveReleases(build, releases, channelIds, cb) {
+  removeReleases(build, releases, channelIds, function(err) {
+    if (err) return cb(err);
+
+    addReleases(build, releases, channelIds, function(err) {
+      cb(err, build);
+    });
+  });
+}
+
+function removeReleases(build, releases, channelIds, cb) {
+  async.eachSeries(releases, function(release, next) {
+    if (!channelIds.some(function(id) { return id === release.channel_id; })) {
+      Release.delete({
+        build_id: build.id,
+        channel_id: release.channel_id
+      }, next);
+    } else {
+      next();
+    }
+  }, cb);
+}
+
+function addReleases(build, releases, channelIds, cb) {
+  async.eachSeries(channelIds, function(channelId, next) {
+    if (!releases.some(function(r) { return r.channel_id === channelId; })) {
+      Release.create({
+        build_id: build.id,
+        channel_id: channelId
+      }, next);
+    } else {
+      next();
+    }
+  }, cb);
+}
+
+Build.updateReleasesForBuildId = function(id, channelIds, cb) {
+  channelIds = utils.toIntegerArray(channelIds);
+
+  Build.find(id, function(err, build) {
+    if (err) return cb(err);
+    if (!build) return cb();
+
+    Release.findAllForBuildId(build.id, function(err, releases) {
+      if (err) return cb(err);
+
+      addAndRemoveReleases(build, releases, channelIds, cb);
+    });
+  });
 };
 
 module.exports = Build;

@@ -59,4 +59,20 @@ describe('build routes', function() {
       .get('/admin/builds/1')
       .expect(401, done)
   });
+
+  it('should allow releases to be added', function(done) {
+    request(app)
+      .put('/admin/builds/1/releases')
+      .send({ releases: { channel_ids: [1] } })
+      .set('Cookie', app.get('test:cookies'))
+      .expect(302, done)
+  });
+
+  it('should allow releases to be removed', function(done) {
+    request(app)
+      .put('/admin/builds/1/releases')
+      .send({ releases: { channel_ids: [] } })
+      .set('Cookie', app.get('test:cookies'))
+      .expect(302, done)
+  });
 });

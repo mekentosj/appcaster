@@ -21,4 +21,20 @@ Release.create = function(fields, cb) {
   utils.findOne(query, cb);
 };
 
+Release.delete = function(fields, cb) {
+  var query = this.schema.delete(fields).toQuery();
+
+  utils.findOne(query, cb);
+};
+
+Release.findAllForBuildId = function(buildId, cb) {
+  var query = this.schema.select('*')
+    .from(this.schema)
+    .where(this.schema.build_id.equals(buildId))
+    .order('releases.created_at DESC')
+    .toQuery();
+
+  utils.findAll(query, cb);
+};
+
 module.exports = Release;

@@ -16,8 +16,13 @@ function findAll(query, cb) {
   });
 }
 
+function toIntegerArray(a) {
+  return a.map(function(v) { return parseInt(v, 10); });
+}
+
 module.exports = {
   findAll: findAll,
   findOne: findOne,
-  firstResult: firstResult
+  firstResult: firstResult,
+  toIntegerArray: toIntegerArray
 };

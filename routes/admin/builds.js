@@ -1,5 +1,8 @@
 var App = require('./../../models').App;
 var Build = require('./../../models').Build;
+var Channel = require('./../../models').Channel;
+var errors = require('./../../errors');
+var Release = require('./../../models').Release;
 
 module.exports = {
   index: function(req, res, next) {
@@ -40,10 +43,40 @@ module.exports = {
     });
   },
 
+  release: function(req, res, next) {
+    Build.find(req.param('id'), function(err, build) {
+      if (err) return next(err);
+      if (!build) return next(new errors.NotFound('Build not found'));
+
+      Channel.findAllForApp(build.app_id, function(err, channels) {
+        Release.findAllForBuildId(build.id, function(err, releases) {
+          if (err) return next(err);
+          res.render('admin/builds/release', {
+            flash: req.flash(),
+            build: build,
+            channels: channels,
+            releases: releases
+          });
+        });
+      });
+    });
+  },
+
   show: function(req, res, next) {
     Build.find(req.param('id'), function(err, build) {
       if (err) return next(err);
       res.render('admin/builds/edit', { flash: req.flash(), build: build });
+    });
+  },
+
+  releases: function(req, res, next) {
+    var channelIds = req.body.releases  && req.body.releases.channel_ids
+      ? req.body.releases.channel_ids : [];
+
+    Build.updateReleasesForBuildId(req.param('id'), channelIds, function(err, build) {
+      if (err) return next(err);
+      res.flash.success('Channels updated');
+      res.redirect('/admin/builds/' + build.id + '/release');
     });
   }
 };

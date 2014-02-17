@@ -92,11 +92,17 @@ app.get('/admin/channels/new', middleware.loadAllApps, routes.admin.channels.new
 app.get('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.show);
 app.patch('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.patch);
 
+app.get('/admin/builds*', function(req, res, next) {
+  res.locals.buildHelpers = require('./helpers/builds');
+  next();
+});
 app.get('/admin/builds', routes.admin.builds.index);
 app.post('/admin/builds', middleware.loadAllApps, routes.admin.builds.create);
 app.get('/admin/builds/new', middleware.loadAllApps, routes.admin.builds.new);
 app.get('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.show);
 app.patch('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.patch);
+app.get('/admin/builds/:id/release', middleware.loadAllApps, routes.admin.builds.release);
+app.put('/admin/builds/:id/releases', middleware.loadAllApps, routes.admin.builds.releases);
 
 app.use(function(err, req, res, next) {
   if (!err.statusCode) {

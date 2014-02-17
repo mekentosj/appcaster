@@ -55,6 +55,16 @@ Channel.findAll = function(cb) {
   utils.findAll(query, cb);
 };
 
+Channel.findAllForApp = function(appId, cb) {
+  var query = this.schema.select('*')
+    .from(this.schema)
+    .where(this.schema.app_id.equals(appId))
+    .order('channels.title')
+    .toQuery();
+
+  utils.findAll(query, cb);
+};
+
 Channel.create = function(fields, cb) {
   var query = this.schema.insert(fields).returning('*').toQuery();
 

@@ -1,0 +1,21 @@
+<h2>Release build: <%= build.version %></h2>
+
+<p>Select the channels where this build should be published.</p>
+
+<form role="form" method="post" action="/admin/builds/<%= build.id %>/releases">
+  <input type="hidden" name="_method" value="PUT" />
+
+  <div class="form-group">
+    <div class="btn-group" data-toggle="buttons">
+      <% channels.forEach(function(channel) { %>
+        <label class="btn btn-primary<%- releases.some(function(r) { return r.channel_id === channel.id && r.build_id === build.id; }) ? ' active' : '' %>">
+          <input name="releases[channel_ids][]" value="<%= channel.id %>" <%- releases.some(function(r) { return r.channel_id === channel.id && r.build_id === build.id; }) ? 'checked' : '' %> type="checkbox"> <%= channel.title %>
+        </label>
+      <% }) %>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input type="submit" class="btn btn-primary" value="Save" />
+  </div>
+</form>

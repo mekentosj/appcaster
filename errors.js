@@ -18,7 +18,17 @@ function AuthError(message) {
 }
 util.inherits(AuthError, Error);
 
+function NotFound(message) {
+  Error.call(this);
+  Error.captureStackTrace(this, arguments.callee);
+  this.statusCode = 404;
+  this.message = message;
+  this.name = 'NotFound';
+}
+util.inherits(NotFound, Error);
+
 module.exports = {
   AuthError: AuthError,
-  BadRequest: BadRequest
+  BadRequest: BadRequest,
+  NotFound: NotFound
 };
