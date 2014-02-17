@@ -58,9 +58,19 @@ Build.find = function(id, cb) {
   utils.findOne(query, cb);
 };
 
+function channelsSubquery() {
+  var sql = 'array_to_string(';
+  sql += 'array(';
+  sql += 'SELECT channels.title FROM channels, releases ';
+  sql += 'WHERE channels.id = releases.channel_id AND releases.build_id = builds.id';
+  sql += "), ', ') ";
+  sql += 'AS released_channels';
+  return sql;
+}
+
 Build.findAll = function(cb) {
   var app = App.schema;
-  var query = this.schema.select('builds.*, apps.name AS app_name')
+  var query = this.schema.select('builds.*, apps.name AS app_name, ' + channelsSubquery())
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
     .order('builds.publication_date DESC')
     .toQuery();
