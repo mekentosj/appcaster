@@ -27,7 +27,7 @@ Channel.create = function(fields, cb) {
 
 Channel.find = function(id, cb) {
   var app = App.schema;
-  var query = this.schema.select('channels.*, apps.name AS app_name')
+  var query = this.schema.select('channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug')
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
     .where(this.schema.id.equals(id))
     .toQuery();
@@ -37,7 +37,7 @@ Channel.find = function(id, cb) {
 
 Channel.findByChannelUrlSlug = function(url, cb) {
   var app = App.schema;
-  var query = this.schema.select('channels.*, apps.name AS app_name')
+  var query = this.schema.select('channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug')
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
     .where(this.schema.url_slug.equals(url))
     .toQuery();
@@ -47,7 +47,7 @@ Channel.findByChannelUrlSlug = function(url, cb) {
 
 Channel.findAll = function(cb) {
   var app = App.schema;
-  var query = this.schema.select('channels.*, apps.name AS app_name')
+  var query = this.schema.select('channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug')
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
     .order('channels.title')
     .toQuery();
@@ -56,8 +56,9 @@ Channel.findAll = function(cb) {
 };
 
 Channel.findAllForApp = function(appId, cb) {
-  var query = this.schema.select('*')
-    .from(this.schema)
+  var app = App.schema;
+  var query = this.schema.select('channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug')
+    .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
     .where(this.schema.app_id.equals(appId))
     .order('channels.title')
     .toQuery();

@@ -14,6 +14,7 @@ app.configure('development', 'production', 'staging', function() {
 });
 
 app.locals = require('./helpers');
+app.locals.rootUrl = config.rootUrl;
 
 app.use(express.static('public'));
 app.use(express.bodyParser());
@@ -100,6 +101,7 @@ app.get('/admin/builds', routes.admin.builds.index);
 app.post('/admin/builds', middleware.loadAllApps, routes.admin.builds.create);
 app.get('/admin/builds/new', middleware.loadAllApps, routes.admin.builds.new);
 app.get('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.show);
+app.get('/admin/builds/:id/edit', middleware.loadAllApps, routes.admin.builds.edit);
 app.patch('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.patch);
 app.get('/admin/builds/:id/release', middleware.loadAllApps, routes.admin.builds.release);
 app.put('/admin/builds/:id/releases', middleware.loadAllApps, routes.admin.builds.releases);

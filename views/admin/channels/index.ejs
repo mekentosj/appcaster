@@ -1,3 +1,19 @@
 <p><a href="/admin/channels/new" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add channel</a></p>
 
-<%- bootstrap.table(channels, [{ name: 'App', value: function(c) { return c.app_name; } }, 'title', 'url_slug', { name: 'Options', value: function(c) { return '<a href="/admin/channels/' + c.id + '" class="btn btn-default">Edit</a>'; } }]) %>
+<%- bootstrap.table(channels, [{
+    name: 'App',
+    value: function(c) { return c.app_name; }
+  },
+  'title',
+  {
+    name: 'URL',
+    value: function(c) {
+      var url = rootUrl + '/apps/' + c.app_url_slug + '/' + c.url_slug + '/appcast.xml';
+      return '<a href="' + url + '">' + c.url_slug + '</a>';
+    }
+  },
+  {
+    name: 'Options',
+    value: function(c) { return '<a href="/admin/channels/' + c.id + '" class="btn btn-default">Edit</a>'; }
+  }
+]) %>

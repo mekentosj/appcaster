@@ -65,6 +65,21 @@ module.exports = {
   show: function(req, res, next) {
     Build.find(req.param('id'), function(err, build) {
       if (err) return next(err);
+
+      Channel.findAllForApp(build.app_id, function(err, channels) {
+
+        res.render('admin/builds/show', {
+          build: build,
+          channels: channels,
+          flash: req.flash()
+        });
+      });
+    });
+  },
+
+  edit: function(req, res, next) {
+    Build.find(req.param('id'), function(err, build) {
+      if (err) return next(err);
       res.render('admin/builds/edit', { flash: req.flash(), build: build });
     });
   },

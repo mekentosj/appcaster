@@ -1,25 +1,5 @@
 module.exports = {
-  apps: {
-    mac: {
-      title: 'Papers for Mac',
-      platform: 'Mac OS X'
-    },
-
-    win: {
-      title: 'Papers for Windows',
-      platform: 'Windows'
-    }
-  },
-
-  channels: {
-    beta: {
-      title: 'Papers beta'
-    },
-
-    release: {
-      title: 'Papers'
-    }
-  },
+  rootUrl: 'http://localhost:3000',
 
   database: 'postgres://papers:test@localhost/appcaster',
 
