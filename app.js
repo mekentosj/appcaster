@@ -121,7 +121,7 @@ app.use(function(err, req, res, next) {
     console.error(err);
     console.error(err.stack);
   }
-  res.send(err.statusCode || 500);
+  res.send(err.statusCode || 500, err.message);
 });
 
 module.exports = app;

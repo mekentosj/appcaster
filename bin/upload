@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+# Command-line options
+rootUrl=$1
+appUrl=$2
+pathToFile=$3
+privateKeyPath=$4
+
+# Options you can change
+downloadUrl=http://downloads.mekentosj.com/
+
+fileName="${pathToFile##*/}"
+fileSize=$(stat -f "%z" "$pathToFile")
+
+# The Appcaster API method for uploading builds
+uploadUrl="$rootUrl/apps/$appUrl/builds"
+
+# Generate the signature used by Sparkle
+dsaSignature=$(openssl dgst -sha1 -binary < $pathToFile | openssl dgst -dss1 -sign $privateKeyPath | openssl enc -base64)
+
+# The JSON Appcaster expects
+buildJson=$(cat <<SETVAR
+{
+  "filename": "$fileName",
+  "identifier": "123",
+  "version": "3.0.16",
+  "version_string": "Papers 3.0.16",
+  "minimum_system_version": "10.6.0",
+  "length": "$fileSize",
+  "download_url": "$downloadUrl$fileName",
+  "signature": "$dsaSignature"
+}
+SETVAR)
+
+echo "Uploading $fileName to $uploadUrl"
+
+curl -H "Content-Type: application/json" \
+  -X POST -d "$buildJson" \
+  $uploadUrl
