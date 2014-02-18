@@ -48,6 +48,15 @@ Build.create = function(fields, cb) {
   utils.findOne(query, cb);
 };
 
+Build.delete = function(id, cb) {
+  var query = this.schema.delete()
+    .from(this.schema)
+    .where(this.schema.id.equals(id))
+    .toQuery();
+
+  db.query(query.text, query.values, cb);
+};
+
 Build.find = function(id, cb) {
   var app = App.schema;
   var query = this.schema.select('builds.*, apps.name AS app_name')

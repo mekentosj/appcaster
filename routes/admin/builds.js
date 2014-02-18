@@ -28,6 +28,14 @@ module.exports = {
     });
   },
 
+  delete: function(req, res, next) {
+    Build.delete(req.param('id'), function(err) {
+      if (err) return next(err);
+      res.flash.success('Build deleted');
+      res.redirect('/admin/builds');
+    });
+  },
+
   patch: function(req, res, next) {
     var fields = req.body.build;
     fields.id = req.param('id');

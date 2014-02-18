@@ -107,6 +107,7 @@ app.get('/admin/builds/:id/edit', middleware.loadAllApps, routes.admin.builds.ed
 app.patch('/admin/builds/:id', middleware.loadAllApps, routes.admin.builds.patch);
 app.get('/admin/builds/:id/release', middleware.loadAllApps, routes.admin.builds.release);
 app.put('/admin/builds/:id/releases', middleware.loadAllApps, routes.admin.builds.releases);
+app.del('/admin/builds/:id', routes.admin.builds.delete);
 
 app.use(function(err, req, res, next) {
   if (!err.statusCode) {
