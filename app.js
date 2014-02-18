@@ -57,6 +57,10 @@ passport.deserializeUser(function(user, done) {
   done(null, user);
 });
 
+app.get('/', function(res, req) {
+  req.redirect('/admin');
+});
+
 app.get('/auth/github', passport.authenticate('github'));
 
 function authSuccess(req, res) {
@@ -125,6 +129,7 @@ app.use(function(err, req, res, next) {
     console.error(err);
     console.error(err.stack);
   }
+
   res.status(err.statusCode || 500);
   res.render('error', { err: err });
 });

@@ -1,6 +1,9 @@
 <h1>Error: <%= err.statusCode || 500 %></h1>
 
-<% if (err.message) { %>
+<% if (err.statusCode === 401) { %>
+  <p>You must be signed in to access that page.</p>
+  <p><a href="/admin">Sign in here</a></p>
+<% } else if (err.message) { %>
   <pre><%= err.message %></pre>
 <% } else { %>
   <p>Unknown error.</p>
