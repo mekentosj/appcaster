@@ -12,6 +12,26 @@ function humanizeField(field) {
 }
 
 module.exports = {
+  breadcrumb: function() {
+    var breadcrumb;
+    var html = '';
+    var i;
+
+    html += '<ol class="breadcrumb">';
+
+    for (i = 0; i < arguments.length; i++) {
+      breadcrumb = arguments[i];
+      if (typeof breadcrumb === 'string') {
+        html += '  <li class="active">' + breadcrumb + '</li>';
+      } else {
+        html += '  <li><a href="' + breadcrumb[1] + '">' + breadcrumb[0] + '</a></li>';
+      }
+    }
+
+    html += '</ol>';
+    return html;
+  },
+
   input: function(type, options) {
     options.type = type;
 
