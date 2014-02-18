@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+var seed = require('./../test/lib/seed')
+
+seed(function() {
+  console.log('Done');
+  process.exit();
+});
