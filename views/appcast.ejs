@@ -11,7 +11,7 @@
     <sparkle:releaseNotesLink><%= buildNotesUrl(urlRoot, appcast, build) %></sparkle:releaseNotesLink>
     <sparkle:minimumSystemVersion><%= build.minimum_system_version %></sparkle:minimumSystemVersion>
     <pubDate><%= build.publication_date %></pubDate>
-    <enclosure url="<%= build.download_url %>" sparkle:version="<%= build.version %>" sparkle:shortVersionString="<%= build.version_string %>" type="application/octet-stream" sparkle:dsaSignature=">%= build.signature %>" length="<%= build.length %>" />
+    <enclosure url="<%= build.download_url %>" sparkle:version="<%= build.version %>" sparkle:shortVersionString="<%= build.version_string %>" type="application/octet-stream" sparkle:dsaSignature="<%= build.signature %>" length="<%= build.length %>" />
   </item>
   <% }) %>
 </channel>

@@ -75,7 +75,9 @@ module.exports = {
       if (err) return next(err);
       if (!build) return next(new errors.NotFound('Build not found'));
 
-      Channel.findAllForApp(build.app_id, function(err, channels) {
+      Channel.findAllForBuild(build.app_id, function(err, channels) {
+        if (err) return next(err);
+
         res.render('admin/builds/show', {
           build: build,
           channels: channels,

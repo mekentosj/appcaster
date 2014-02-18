@@ -1,5 +1,6 @@
 var Appcast = require('./../models').Appcast;
 var Build = require('./../models').Build;
+var errors = require('./../errors');
 var marked = require('marked');
 
 module.exports = {
@@ -38,8 +39,10 @@ module.exports = {
       channel_url: req.param('channel_url_slug'),
       version: req.param('version')
     }, function(err, appcast) {
-      if (!appcast || !appcast.build) {
-        res.send(404);
+      if (err) return next(err);
+
+      if (!appcast) {
+        return next(new errors.NotFound('Appcast not found'));
       }
 
       res.render('release_notes', {

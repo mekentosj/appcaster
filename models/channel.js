@@ -1,5 +1,6 @@
 var App = require('./app');
 var db = require('./../db');
+var Release = require('./release');
 var sql = require('sql');
 var utils = require('./utils');
 
@@ -61,6 +62,26 @@ Channel.findAll = function(cb) {
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
     .order('channels.title')
     .toQuery();
+
+  utils.findAll(query, cb);
+};
+
+Channel.findAllForBuild = function(buildId, cb) {
+  var sql = '';
+  sql += 'SELECT';
+  sql += '    channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug';
+  sql += ' FROM';
+  sql += '    apps, channels, releases, builds';
+  sql += ' WHERE';
+  sql += '    apps.id = channels.app_id';
+  sql += '    AND channels.id = releases.channel_id';
+  sql += '    AND builds.id = releases.build_id';
+  sql += '    AND builds.id = $1';
+
+  var query = {
+    text: sql,
+    values: [buildId]
+  };
 
   utils.findAll(query, cb);
 };
