@@ -9,14 +9,15 @@ var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 var db = require('./db');
 
-app.configure('development', 'production', 'staging', function() {
-  app.use(express.logger());
-});
-
 app.locals = require('./helpers');
 app.locals.rootUrl = config.rootUrl;
 
 app.use(express.static('public'));
+
+app.configure('development', 'production', 'staging', function() {
+  app.use(express.logger());
+});
+
 app.use(express.bodyParser());
 app.use(express.methodOverride());
 app.use(express.cookieParser());
