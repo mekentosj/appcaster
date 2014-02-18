@@ -116,12 +116,17 @@ app.get('/admin/builds/:id/release', middleware.loadAllApps, routes.admin.builds
 app.put('/admin/builds/:id/releases', middleware.loadAllApps, routes.admin.builds.releases);
 app.del('/admin/builds/:id', routes.admin.builds.delete);
 
+app.use(function(req, res, next) {
+  next(new errors.NotFound('Page not found'));
+});
+
 app.use(function(err, req, res, next) {
   if (!err.statusCode) {
     console.error(err);
     console.error(err.stack);
   }
-  res.send(err.statusCode || 500, err.message);
+  res.status(err.statusCode || 500);
+  res.render('error', { err: err });
 });
 
 module.exports = app;

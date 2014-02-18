@@ -73,9 +73,9 @@ module.exports = {
   show: function(req, res, next) {
     Build.find(req.param('id'), function(err, build) {
       if (err) return next(err);
+      if (!build) return next(new errors.NotFound('Build not found'));
 
       Channel.findAllForApp(build.app_id, function(err, channels) {
-
         res.render('admin/builds/show', {
           build: build,
           channels: channels,
@@ -88,6 +88,7 @@ module.exports = {
   edit: function(req, res, next) {
     Build.find(req.param('id'), function(err, build) {
       if (err) return next(err);
+      if (!build) return next(new errors.NotFound('Build not found'));
       res.render('admin/builds/edit', { flash: req.flash(), build: build });
     });
   },

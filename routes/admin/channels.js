@@ -1,5 +1,6 @@
 var App = require('./../../models').App;
 var Channel = require('./../../models').Channel;
+var errors = require('./../../errors');
 
 module.exports = {
   index: function(req, res, next) {
@@ -51,6 +52,7 @@ module.exports = {
   show: function(req, res, next) {
     Channel.find(req.param('id'), function(err, channel) {
       if (err) return next(err);
+      if (!channel) return next(new errors.NotFound('Channel not found'));
       res.render('admin/channels/edit', { flash: req.flash(), channel: channel });
     });
   }

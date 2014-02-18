@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+# Example:
+#
+#   bin/upload http://gorm:password@localhost:3000 papers ~/Downloads/papers_3016.dmg ~/Documents/Code/Papers/papers3-mac/Appcast/dsa_papers2_appcast_priv.pem
+
 # Command-line options
 rootUrl=$1
 appUrl=$2

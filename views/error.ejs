@@ -1,0 +1,7 @@
+<h1>Error: <%= err.statusCode || 500 %></h1>
+
+<% if (err.message) { %>
+  <pre><%= err.message %></pre>
+<% } else { %>
+  <p>Unknown error.</p>
+<% } %>

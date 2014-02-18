@@ -1,4 +1,5 @@
 var Client = require('./../../models').Client;
+var errors = require('./../../errors');
 
 module.exports = {
   index: function(req, res, next) {
@@ -50,6 +51,7 @@ module.exports = {
   show: function(req, res, next) {
     Client.find(req.param('id'), function(err, client) {
       if (err) return next(err);
+      if (!client) return next(new errors.NotFound('Client not found'));
       res.render('admin/clients/edit', { flash: req.flash(), client: client });
     });
   }

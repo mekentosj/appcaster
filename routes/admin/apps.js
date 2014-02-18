@@ -1,4 +1,5 @@
 var App = require('./../../models').App;
+var errors = require('./../../errors');
 
 module.exports = {
   index: function(req, res, next) {
@@ -50,6 +51,7 @@ module.exports = {
   show: function(req, res, next) {
     App.find(req.param('id'), function(err, app) {
       if (err) return next(err);
+      if (!app) return next(new errors.NotFound('App not found'));
       res.render('admin/apps/edit', { flash: req.flash(), app: app });
     });
   }
