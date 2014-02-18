@@ -22,7 +22,7 @@ uploadUrl="$rootUrl/apps/$appUrl/builds"
 # Generate the signature used by Sparkle
 dsaSignature=$(openssl dgst -sha1 -binary < $pathToFile | openssl dgst -dss1 -sign $privateKeyPath | openssl enc -base64)
 
-# The JSON Appcaster expects
+# The JSON expected by Appcaster
 buildJson=$(cat <<SETVAR
 {
   "filename": "$fileName",
