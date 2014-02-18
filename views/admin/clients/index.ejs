@@ -1,0 +1,9 @@
+<p><a href="/admin/clients/new" class="btn btn-default"><span class="glyphicon glyphicon-plus-sign"></span> Add client</a></p>
+
+<%- bootstrap.table(clients, [
+  'name',
+  {
+    name: 'Options',
+    value: function(c) { return '<a href="/admin/clients/' + c.id + '" class="btn btn-default">Edit</a>'; }
+  }
+]) %>

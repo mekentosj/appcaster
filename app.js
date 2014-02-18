@@ -95,6 +95,13 @@ app.get('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.sho
 app.patch('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.patch);
 app.del('/admin/channels/:id', routes.admin.channels.delete);
 
+app.get('/admin/clients', routes.admin.clients.index);
+app.post('/admin/clients', middleware.loadAllApps, routes.admin.clients.create);
+app.get('/admin/clients/new', middleware.loadAllApps, routes.admin.clients.new);
+app.get('/admin/clients/:id', middleware.loadAllApps, routes.admin.clients.show);
+app.patch('/admin/clients/:id', middleware.loadAllApps, routes.admin.clients.patch);
+app.del('/admin/clients/:id', routes.admin.clients.delete);
+
 app.get('/admin/builds*', function(req, res, next) {
   res.locals.buildHelpers = require('./helpers/builds');
   next();

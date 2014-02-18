@@ -35,17 +35,65 @@ Client.create = function(fields, cb) {
   });
 };
 
-Client.register = function(name, password, cb) {
+Client.delete = function(id, cb) {
+  var query = this.schema.delete()
+    .from(this.schema)
+    .where(this.schema.id.equals(id))
+    .toQuery();
+
+  db.query(query.text, query.values, cb);
+};
+
+Client.find = function(id, cb) {
+  var query = this.schema.select('*')
+    .from(this.schema)
+    .where(this.schema.id.equals(id))
+    .toQuery();
+
+  utils.findOne(query, cb);
+};
+
+Client.findAll = function(cb) {
+  var query = this.schema.select('*')
+    .from(this.schema)
+    .order('clients.name')
+    .toQuery();
+
+  utils.findAll(query, cb);
+};
+
+function encryptPassword(password) {
   var salt = bcrypt.genSaltSync(10);
   var hash = bcrypt.hashSync(password, salt);
+  return hash;
+}
+
+Client.register = function(name, password, cb) {
   var query = this.schema.insert({
     name: name,
-    hashed_password: hash
+    hashed_password: encryptPassword(password)
   }).returning('*').toQuery();
 
   db.query(query.text, query.values, function(err, result) {
     cb(err, result && result.rows ? result.rows[0] : null);
   });
+};
+
+Client.update = function(fields, cb) {
+  var id = fields.id;
+  var password = fields.password;
+  delete fields.id;
+  delete fields.password;
+
+  if (password) {
+    fields.hashed_password = encryptPassword(password);
+  }
+
+  var query = this.schema.update(fields)
+    .where(this.schema.id.equals(id))
+    .returning('*').toQuery();
+
+  utils.findOne(query, cb);
 };
 
 module.exports = Client;
