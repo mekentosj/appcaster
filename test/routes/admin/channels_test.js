@@ -51,6 +51,13 @@ describe('channel routes', function() {
       .expect(200, done)
   });
 
+  it('should allow channels to be deleted', function(done) {
+    request(app)
+      .del('/admin/channels/2')
+      .set('Cookie', app.get('test:cookies'))
+      .expect(302, done)
+  });
+
   it('should require authentication', function(done) {
     request(app)
       .get('/admin/channels/1')

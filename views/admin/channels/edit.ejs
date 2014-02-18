@@ -5,3 +5,14 @@
   <% include fields %>
   <button type="submit" class="btn btn-primary">Save changes</button>
 </form>
+
+<hr>
+
+<h2>Delete channel</h2>
+
+<div class="alert alert-warning">Warning: This will remove the channel permanently.</div>
+
+<form method="post" action="/admin/channels/<%= channel.id %>" class="" role="form" onsubmit="return confirm('Are you sure you want to delete this channel?')">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Delete channel</button>
+</form>

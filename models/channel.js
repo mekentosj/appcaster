@@ -1,4 +1,5 @@
 var App = require('./app');
+var db = require('./../db');
 var sql = require('sql');
 var utils = require('./utils');
 
@@ -33,6 +34,15 @@ Channel.find = function(id, cb) {
     .toQuery();
 
   utils.findOne(query, cb);
+};
+
+Channel.delete = function(id, cb) {
+  var query = this.schema.delete()
+    .from(this.schema)
+    .where(this.schema.id.equals(id))
+    .toQuery();
+
+  db.query(query.text, query.values, cb);
 };
 
 Channel.findByChannelUrlSlug = function(url, cb) {

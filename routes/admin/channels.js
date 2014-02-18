@@ -25,6 +25,14 @@ module.exports = {
     });
   },
 
+  delete: function(req, res, next) {
+    Channel.delete(req.param('id'), function(err) {
+      if (err) return next(err);
+      res.flash.success('Channel deleted');
+      res.redirect('/admin/channels');
+    });
+  },
+
   patch: function(req, res, next) {
     var fields = req.body.channel;
     fields.id = req.param('id');

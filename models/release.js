@@ -10,7 +10,7 @@ Release.schema = sql.define({
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },
     { name: 'build_id', dataType: 'int references builds(id)' },
-    { name: 'channel_id', dataType: 'int references channels(id)' },
+    { name: 'channel_id', dataType: 'int references channels(id) ON DELETE CASCADE' },
     { name: 'created_at', dataType: 'timestamp DEFAULT CURRENT_TIMESTAMP' }
   ]
 });

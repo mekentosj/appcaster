@@ -32,6 +32,13 @@ var channels = [{
   title: 'beta',
   language: 'en',
   platform: 'Mac OS X',
+  description: 'Beta releases'
+}, {
+  app_id: 2,
+  url_slug: 'test-def',
+  title: 'alpha',
+  language: 'en',
+  platform: 'Mac OS X',
   description: 'Alpha releases'
 }];
 

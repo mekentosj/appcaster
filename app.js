@@ -92,6 +92,7 @@ app.post('/admin/channels', middleware.loadAllApps, routes.admin.channels.create
 app.get('/admin/channels/new', middleware.loadAllApps, routes.admin.channels.new);
 app.get('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.show);
 app.patch('/admin/channels/:id', middleware.loadAllApps, routes.admin.channels.patch);
+app.del('/admin/channels/:id', routes.admin.channels.delete);
 
 app.get('/admin/builds*', function(req, res, next) {
   res.locals.buildHelpers = require('./helpers/builds');
