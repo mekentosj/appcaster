@@ -11,7 +11,7 @@ Channel.schema = sql.define({
   name: 'channels',
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },
-    { name: 'app_id', dataType: 'int references apps(id)' },
+    { name: 'app_id', dataType: 'int references apps(id) ON DELETE CASCADE' },
     { name: 'url_slug', dataType: "varchar(30) NOT NULL CHECK (url_slug <> '')" },
     { name: 'title', dataType: 'varchar(200) NOT NULL' },
     { name: 'language', dataType: 'varchar(10) NOT NULL' },

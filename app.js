@@ -86,6 +86,7 @@ app.post('/admin/apps', routes.admin.apps.create);
 app.get('/admin/apps/new', routes.admin.apps.new);
 app.get('/admin/apps/:id', routes.admin.apps.show);
 app.patch('/admin/apps/:id', routes.admin.apps.patch);
+app.del('/admin/apps/:id', routes.admin.apps.delete);
 
 app.get('/admin/channels', routes.admin.channels.index);
 app.post('/admin/channels', middleware.loadAllApps, routes.admin.channels.create);

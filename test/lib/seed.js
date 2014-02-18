@@ -6,7 +6,8 @@ var hash = bcrypt.hashSync('password', salt);
 
 var apps = [
   { url_slug: 'papers', name: 'Papers for Mac' },
-  { url_slug: 'pfw', name: 'Papers for Windows' }
+  { url_slug: 'pfw', name: 'Papers for Windows' },
+  { url_slug: 'del', name: 'Delete Me' }
 ];
 
 var builds = [{

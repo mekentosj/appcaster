@@ -42,6 +42,15 @@ App.create = function(fields, cb) {
   utils.findOne(query, cb);
 };
 
+App.delete = function(id, cb) {
+  var query = this.schema.delete()
+    .from(this.schema)
+    .where(this.schema.id.equals(id))
+    .toQuery();
+
+  db.query(query.text, query.values, cb);
+};
+
 App.update = function(fields, cb) {
   var id = fields.id;
   delete fields.id;

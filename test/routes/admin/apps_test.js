@@ -40,6 +40,13 @@ describe('app routes', function() {
       .expect(200, done)
   });
 
+  it('should allow apps to be deleted', function(done) {
+    request(app)
+      .del('/admin/apps/3')
+      .set('Cookie', app.get('test:cookies'))
+      .expect(302, done)
+  });
+
   it('should require authentication', function(done) {
     request(app)
       .get('/admin/apps/1')

@@ -6,3 +6,14 @@
   <%- bootstrap.textField(app, 'url_slug', { name: 'app', label: 'URL fragment' }) %>
   <button type="submit" class="btn btn-primary">Save changes</button>
 </form>
+
+<hr>
+
+<h2>Delete app</h2>
+
+<div class="alert alert-warning">Warning: This will remove the app and associated builds permanently.</div>
+
+<form method="post" action="/admin/apps/<%= app.id %>" class="" role="form" onsubmit="return confirm('Are you sure you want to delete this app?')">
+  <input type="hidden" name="_method" value="delete">
+  <button type="submit" class="btn btn-warning"><i class="glyphicon glyphicon-trash"></i> Delete app</button>
+</form>

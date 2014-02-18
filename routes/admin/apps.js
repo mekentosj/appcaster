@@ -24,6 +24,14 @@ module.exports = {
     });
   },
 
+  delete: function(req, res, next) {
+    App.delete(req.param('id'), function(err) {
+      if (err) return next(err);
+      res.flash.success('App deleted');
+      res.redirect('/admin/apps');
+    });
+  },
+
   patch: function(req, res, next) {
     var fields = req.body.app;
     fields.id = req.param('id');

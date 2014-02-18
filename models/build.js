@@ -13,7 +13,7 @@ Build.schema = sql.define({
   name: 'builds',
   columns: [
     { name: 'id', dataType: 'serial', primaryKey: true },
-    { name: 'app_id', dataType: 'int references apps(id) NOT NULL' },
+    { name: 'app_id', dataType: 'int references apps(id) ON DELETE CASCADE NOT NULL' },
     { name: 'filename', dataType: "varchar(100) NOT NULL CHECK (filename <> '')" },
     { name: 'identifier', dataType: "varchar(100) NOT NULL CHECK (identifier <> '')" },
     { name: 'version', dataType: "varchar(20) NOT NULL CHECK (version <> ''), CONSTRAINT unique_version_and_app UNIQUE (app_id, version)" },
