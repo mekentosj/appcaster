@@ -18,6 +18,16 @@
           <li<%- nav('/admin/builds') %>><a href="/admin/builds">Builds</a></li>
         <% } %>
       </ul>
+
+      <% if (typeof user !== 'undefined') { %>
+        <form action="/admin/session" method="post" class="navbar-form navbar-right">
+          <%= user.name %>
+          <button type="submit" class="btn btn-link">
+            <span class="glyphicon glyphicon-log-out"></span>
+          </button>
+          <input type="hidden" value="delete" name="_method" />
+        </form>
+      <% } %>
     </div><!--/.nav-collapse -->
   </div>
 </div>

@@ -84,6 +84,7 @@ app.all('/admin/*', middleware.requiresUser, middleware.navigation);
 app.get('/admin', middleware.redirectIfSignedIn, routes.admin.index);
 app.post('/admin/session', routes.admin.session.create);
 app.get('/admin/session/error', routes.admin.session.error);
+app.del('/admin/session', routes.admin.session.delete);
 
 app.get('/admin/apps', routes.admin.apps.index);
 app.post('/admin/apps', routes.admin.apps.create);
