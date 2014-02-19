@@ -6,9 +6,8 @@
 <% ['filename', 'identifier', 'version', 'version_string'].forEach(function(field) { %>
   <li><%= field %>: <%= build[field] %></li>
 <% }) %>
-  <li>Download URL: <a href="<%= build.download_url %>"><%= build.download_url %></a></li>
-
   <% channels.forEach(function(channel) { %>
+    <li><%= channel.title %> download URL: <a href="<%= downloadUrl(rootUrl, build, channel) %>"><%= downloadUrl(rootUrl, build, channel) %></a></li>
     <li><%= channel.title %> release notes URL: <a href="<%= buildHelpers.releaseNotesUrl(rootUrl, build, channel) %>"><%= buildHelpers.releaseNotesUrl(rootUrl, build, channel) %></a></li>
   <% }) %>
 </ul>

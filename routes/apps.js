@@ -31,6 +31,19 @@ module.exports = {
   },
 
   download: function(req, res, next) {
+    Appcast.findBuildByVersion({
+      app_url: req.param('url_slug'),
+      channel_url: req.param('channel_url_slug'),
+      version: req.param('version')
+    }, function(err, appcast) {
+      if (err) return next(err);
+
+      if (!appcast) {
+        return next(new errors.NotFound('Appcast not found'));
+      }
+
+      res.redirect(appcast.build.download_url);
+    });
   },
 
   releaseNotes: function(req, res, next) {

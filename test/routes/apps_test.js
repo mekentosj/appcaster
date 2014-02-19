@@ -14,7 +14,7 @@ describe('build routes', function() {
       });
   });
 
-  it('should serve up release notes', function(done) {
+  it('should render release notes', function(done) {
     request(app)
       .get('/apps/papers/test-abc/release-notes/3.2.14.html')
       .expect(200)
@@ -22,5 +22,11 @@ describe('build routes', function() {
         assert(res.text);
         done();
       });
+  });
+
+  it('should redirect to downloads', function(done) {
+    request(app)
+      .get('/apps/papers/test-abc/download/3.2.14/papers-abc.dmg')
+      .expect(302, done);
   });
 });
