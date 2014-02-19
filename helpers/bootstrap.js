@@ -58,7 +58,8 @@ module.exports = {
     var checkedAttribute = options.checked ? ' checked="checked"' : '';
     options.placeholder = options.placeholder || '';
     options.rows = options.rows || 4;
-    return ejs.render('<textarea class="form-control" id="<%= id %>" placeholder="<%= placeholder %>" rows="<%= rows %>" name="<%= name %>"' + checkedAttribute + disabledAttribute + readonlyAttribute + '><%= value || \'\' %></textarea>', options);
+    options.className = options.class || 'form-control';
+    return ejs.render('<textarea class="<%= className %>" id="<%= id %>" placeholder="<%= placeholder %>" rows="<%= rows %>" name="<%= name %>"' + checkedAttribute + disabledAttribute + readonlyAttribute + '><%= value || \'\' %></textarea>', options);
   },
 
   textInput: function(options) {

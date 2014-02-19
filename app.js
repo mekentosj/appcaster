@@ -13,6 +13,7 @@ app.locals = require('./helpers');
 app.locals.rootUrl = config.rootUrl;
 
 app.use(express.static('public'));
+app.use('/js/marked/', express.static('./node_modules/marked/lib/'));
 
 app.configure('development', 'production', 'staging', function() {
   app.use(express.logger());
