@@ -2,7 +2,7 @@
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"  xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
   <title><%= channel.title %></title>
-  <link><%= url %></link>
+  <link><%= urlRoot + url %></link>
   <description><%= channel.description %></description>
   <language><%= channel.language %></language>
   <% builds.forEach(function(build) { %>
