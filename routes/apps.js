@@ -1,5 +1,6 @@
 var Appcast = require('./../models').Appcast;
 var Build = require('./../models').Build;
+var config = require('./../config');
 var errors = require('./../errors');
 var marked = require('marked');
 
@@ -25,7 +26,7 @@ module.exports = {
         channel: appcast.channel,
         layout: false,
         url: req.url,
-        urlRoot: req.protocol + '://' + req.hostname
+        urlRoot: config.rootUrl
       });
     });
   },
