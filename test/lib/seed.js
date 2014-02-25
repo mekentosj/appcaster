@@ -12,6 +12,7 @@ var apps = [
 
 var builds = [{
   app_id: 1,
+  title: 'Papers for Mac',
   filename: 'papers-abc.dmg',
   identifier: 'papers-1',
   version: '3.2.14',

@@ -7,7 +7,7 @@
   <language><%= channel.language %></language>
   <% builds.forEach(function(build) { %>
   <item>
-    <title><%= app.name %></title>
+    <title><%= build.title %></title>
     <sparkle:releaseNotesLink><%= buildNotesUrl(urlRoot, appcast, build) %></sparkle:releaseNotesLink>
     <sparkle:minimumSystemVersion><%= build.minimum_system_version %></sparkle:minimumSystemVersion>
     <pubDate><%= build.publication_date %></pubDate>

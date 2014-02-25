@@ -9,6 +9,7 @@ function makeBuildFields() {
 
   return {
     app_id: 1,
+    title: 'Papers for X',
     filename: 'papers.dmg',
     identifier: 'id-1234',
     version: '3.1.' + lastVersion,

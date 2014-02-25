@@ -6,6 +6,7 @@ function makeBuild() {
   return {
     app_id: 1,
     filename: 'papers-123.dmg',
+    title: 'Papers for Batman',
     identifier: 'papers-id',
     version: '3.2.15',
     version_string: '3.2.15 Viking Edition',

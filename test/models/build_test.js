@@ -4,6 +4,7 @@ var Build = require('./../../models').Build;
 function makeBuildFields() {
   return {
     app_id: 1,
+    title: 'Papers for Mac',
     filename: 'papers.dmg',
     identifier: 'id-1234',
     version: '3.1.18',
