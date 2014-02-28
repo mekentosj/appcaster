@@ -60,9 +60,10 @@ module.exports = {
       }
 
       res.render('release_notes', {
+        appcast: appcast,
         build: appcast.build,
         notes: marked(appcast.build.notes),
-        layout: false
+        layout: 'release-notes-layout'
       });
     });
   }
