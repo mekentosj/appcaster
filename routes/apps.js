@@ -62,7 +62,7 @@ module.exports = {
       res.render('release_notes', {
         appcast: appcast,
         build: appcast.build,
-        notes: marked(appcast.build.notes),
+        notes: marked(appcast.build.notes || ''),
         layout: 'release-notes-layout'
       });
     });
