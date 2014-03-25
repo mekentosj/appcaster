@@ -135,6 +135,22 @@ Build.findForVersion = function(options, cb) {
   utils.findOne(query, cb);
 };
 
+Build.findLatest = function(options, cb) {
+  var channel = options.channel;
+  var release = Release.schema;
+
+  var query = this.schema.select('builds.*')
+    .from(
+      this.schema.join(release)
+        .on(release.build_id.equals(this.schema.id)
+          .and(release.channel_id.equals(channel.id)))
+    )
+    .order('builds.publication_date DESC')
+    .toQuery();
+
+  utils.findOne(query, cb);
+};
+
 function addAndRemoveReleases(build, releases, channelIds, cb) {
   removeReleases(build, releases, channelIds, function(err) {
     if (err) return cb(err);

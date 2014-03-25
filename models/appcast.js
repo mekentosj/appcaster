@@ -54,4 +54,29 @@ Appcast.findBuildByVersion = function(options, cb) {
   });
 };
 
+Appcast.findLatest = function(options, cb) {
+  App.findByUrlSlug(options.app_url, function(err, app) {
+    if (err) return cb(err);
+    if (!app) return cb();
+
+    Channel.findByChannelUrlSlug(options.channel_url, function(err, channel) {
+      if (err) return cb(err);
+      if (!channel) return cb();
+
+      Build.findLatest({
+        channel: channel,
+      }, function(err, build) {
+        if (err) return cb(err);
+        if (!build) return cb();
+
+        cb(null, {
+          app: app,
+          build: build,
+          channel: channel
+        });
+      });
+    });
+  });
+};
+
 module.exports = Appcast;
