@@ -10,7 +10,7 @@ Appcast.find = function(options, cb) {
     if (err) return cb(err);
     if (!app) return cb();
 
-    Channel.findByChannelUrlSlug(options.channel_url, function(err, channel) {
+    Channel.findByChannelUrlSlug(app.id, options.channel_url, function(err, channel) {
       if (err) return cb(err);
       if (!channel) return cb();
 
@@ -33,7 +33,7 @@ Appcast.findBuildByVersion = function(options, cb) {
     if (err) return cb(err);
     if (!app) return cb();
 
-    Channel.findByChannelUrlSlug(options.channel_url, function(err, channel) {
+    Channel.findByChannelUrlSlug(app.id, options.channel_url, function(err, channel) {
       if (err) return cb(err);
       if (!channel) return cb();
 
@@ -59,7 +59,7 @@ Appcast.findLatest = function(options, cb) {
     if (err) return cb(err);
     if (!app) return cb();
 
-    Channel.findByChannelUrlSlug(options.channel_url, function(err, channel) {
+    Channel.findByChannelUrlSlug(app.id, options.channel_url, function(err, channel) {
       if (err) return cb(err);
       if (!channel) return cb();
 

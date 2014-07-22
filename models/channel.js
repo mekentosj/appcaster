@@ -46,10 +46,11 @@ Channel.delete = function(id, cb) {
   db.query(query.text, query.values, cb);
 };
 
-Channel.findByChannelUrlSlug = function(url, cb) {
-  var app = App.schema;
+Channel.findByChannelUrlSlug = function(appId, url, cb) {
+  var app = App.schema
   var query = this.schema.select('channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug')
     .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
+    .where(this.schema.app_id.equals(appId))
     .where(this.schema.url_slug.equals(url))
     .toQuery();
 
