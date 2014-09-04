@@ -12,5 +12,9 @@ module.exports = {
     template = template.replace(/:channel_url_slug/, channel.url_slug);
     template = template.replace(/:version/, build.version);
     return template;
+  },
+
+  downloadLink: function(build) {
+    return '<a href="' + build.download_url + '">' + build.fileName + '</a>';
   }
 };
