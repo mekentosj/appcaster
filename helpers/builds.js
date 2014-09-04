@@ -15,6 +15,6 @@ module.exports = {
   },
 
   downloadLink: function(build) {
-    return '<a href="' + build.download_url + '">' + build.fileName + '</a>';
+    return '<a href="' + build.download_url + '">' + build.filename + '</a>';
   }
 };
