@@ -22,7 +22,7 @@ module.exports = {
   }
 };
 
-if (fs.existsSync('./' + env)) {
+if (fs.existsSync('config/' + env + '.js')) {
   module.exports = require('./' + env);
 }
 
