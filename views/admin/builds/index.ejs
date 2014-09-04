@@ -5,7 +5,10 @@
     value: function(c) { return c.app_name; }
   },
   'title',
-  'filename',
+  {
+    name: 'Filename',
+    value: buildHelpers.downloadLink
+  },
   'version_string',
   'released_channels',
   'publication_date', {
