@@ -14,6 +14,17 @@ describe('build routes', function() {
       });
   });
 
+  it('should skip builds that have hit the download limit', function(done) {
+    request(app)
+      .get('/apps/papers/test-abc/appcast.xml')
+      .expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert(!res.text.match(/version="3.2.13"/), '3.2.13 should not be in the feed');
+        done();
+      });
+  });
+
   it('should render release notes', function(done) {
     request(app)
       .get('/apps/papers/test-abc/release-notes/3.2.14.html')

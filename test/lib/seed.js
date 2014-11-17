@@ -22,6 +22,20 @@ var builds = [{
   download_url: 'https://example.com/papers-abc.dmg',
   signature: 'kxajfqhofk32fmpanc',
   notes: 'This should be _Markdown_'
+}, {
+  app_id: 1,
+  title: 'Papers for Mac',
+  filename: 'papers-cde.dmg',
+  identifier: 'papers-2',
+  version: '3.2.13',
+  version_string: '3.2.13 Evil Whale Edition',
+  minimum_system_version: 'Mac OS 10.8.2',
+  length: 123458,
+  download_url: 'https://example.com/papers-cde.dmg',
+  signature: 'gfmkpo20qdsdaljkhfdas',
+  downloads: 30,
+  download_limit: 30,
+  notes: 'This should be _Markdown_'
 }];
 
 var clients = [

@@ -5,6 +5,19 @@ var Channel = require('./channel');
 function Appcast() {
 }
 
+Appcast.throttleBuilds = function(builds) {
+  if (!builds) return;
+
+  console.log('throttleBuilds');
+
+  return builds.filter(function(build) {
+    console.log('build:', build.download_limit, build.downloads);
+    if (!!build.download_limit) return true;
+    if (build.download_limit >= build.downloads) return false;
+    return true;
+  });
+}
+
 Appcast.find = function(options, cb) {
   App.findByUrlSlug(options.app_url, function(err, app) {
     if (err) return cb(err);

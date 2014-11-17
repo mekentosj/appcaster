@@ -10,4 +10,5 @@
     <li><%= channel.title %> download URL: <a href="<%= downloadUrl(rootUrl, build, channel) %>"><%= downloadUrl(rootUrl, build, channel) %></a></li>
     <li><%= channel.title %> release notes URL: <a href="<%= buildHelpers.releaseNotesUrl(rootUrl, build, channel) %>"><%= buildHelpers.releaseNotesUrl(rootUrl, build, channel) %></a></li>
   <% }) %>
+  <li>Downloads (redirections): <%= build.downloads %></li>
 </ul>

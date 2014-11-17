@@ -2,6 +2,8 @@
 
 <h1>Edit build</h1>
 
+<p>Downloads (redirections): <%= build.downloads %></p>
+
 <form method="post" action="/admin/builds/<%= build.id %>" class="" role="form">
   <input type="hidden" name="_method" value="patch">
   <% include fields %>

@@ -43,6 +43,8 @@ module.exports = {
         return next(new errors.NotFound('Appcast not found'));
       }
 
+      req.app.emit('build:downloaded', appcast.build);
+
       res.redirect(appcast.build.download_url);
     });
   },
@@ -57,6 +59,8 @@ module.exports = {
       if (!appcast) {
         return next(new errors.NotFound('Appcast not found'));
       }
+
+      req.app.emit('build:downloaded', appcast.build);
 
       res.redirect(appcast.build.download_url);
     });

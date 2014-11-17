@@ -8,6 +8,7 @@ var middleware = require('./middleware');
 var passport = require('passport');
 var GitHubStrategy = require('passport-github').Strategy;
 var db = require('./db');
+var Build = require('./models/build');
 
 app.locals = require('./helpers');
 app.locals.rootUrl = config.rootUrl;
@@ -137,5 +138,7 @@ app.use(function(err, req, res, next) {
   res.status(err.statusCode || 500);
   res.render('error', { err: err });
 });
+
+app.on('build:downloaded', Build.countDownload);
 
 module.exports = app;

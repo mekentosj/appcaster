@@ -24,9 +24,17 @@ Build.schema = sql.define({
     { name: 'download_url', dataType: 'varchar(255)' },
     { name: 'signature', dataType: "varchar(100) NOT NULL CHECK (signature <> '')" },
     { name: 'publication_date', dataType: 'timestamp DEFAULT CURRENT_TIMESTAMP' },
+    { name: 'download_limit', dataType: 'int DEFAULT 0' },
+    { name: 'downloads', dataType: 'int DEFAULT 0' },
     { name: 'notes', dataType: 'text' }
   ]
 });
+
+Build.countDownload = function(build) {
+  db.query('UPDATE builds SET downloads = downloads + 1 WHERE id = $1::int', [build.id], function(err, result) {
+    if (err) console.error(err);
+  });
+};
 
 Build.createWithAppUrl = function(urlSlug, buildFields, cb) {
   App.findByUrlSlug(urlSlug, function(err, app) {
@@ -95,6 +103,7 @@ Build.findAllForChannel = function(channel, cb) {
       this.schema.join(release)
         .on(release.build_id.equals(this.schema.id).and(release.channel_id.equals(channel.id)))
     )
+    .where('(builds.download_limit = 0 OR builds.downloads < builds.download_limit)')
     .order('builds.publication_date DESC')
     .toQuery();
 
@@ -110,6 +119,11 @@ Build.create = function(fields, cb) {
 Build.update = function(fields, cb) {
   var id = fields.id;
   delete fields.id;
+
+  if (fields.download_limit === '') {
+    fields.download_limit = 0;
+  }
+
   var query = this.schema.update(fields)
     .where(this.schema.id.equals(id))
     .returning('*').toQuery();

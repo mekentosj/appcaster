@@ -13,7 +13,7 @@ function makeBuildFields() {
     filename: 'papers.dmg',
     identifier: 'id-1234',
     version: '3.1.' + lastVersion,
-    version_string: '3.1.' + lastVersion + ' Lunar Edition',
+    version_string: '3.1.' + lastVersion + ' Depressed Yeti Edition',
     minimum_system_version: 'Mac OS X 10.8',
     length: 123456,
     download_url: 'http://aws.example.com/id-1234/papers.dmg',
