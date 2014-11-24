@@ -159,6 +159,7 @@ Build.findLatest = function(options, cb) {
         .on(release.build_id.equals(this.schema.id)
           .and(release.channel_id.equals(channel.id)))
     )
+    .where('(builds.download_limit = 0 OR builds.downloads < builds.download_limit)')
     .order('builds.publication_date DESC')
     .toQuery();
 
