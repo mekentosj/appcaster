@@ -67,6 +67,26 @@ Channel.findAll = function(cb) {
   utils.findAll(query, cb);
 };
 
+Channel.getIdsForNames = function(appId, channelNames, cb) {
+  var app = App.schema
+  var query = this.schema.select('channels.*, apps.name AS app_name, apps.url_slug AS app_url_slug')
+    .from(this.schema.join(app).on(this.schema.app_id.equals(app.id)))
+    .where(this.schema.app_id.equals(appId))
+    .where(this.schema.url_slug.in(channelNames))
+    .toQuery();
+
+  utils.findAll(query, function(err, results) {
+    if (err) return cb(err);
+    if (!results) return cb();
+
+    var ids = results.map(function(channel) {
+      return channel.id;
+    });
+
+    cb(null, ids);
+  });
+};
+
 Channel.findAllForBuild = function(buildId, cb) {
   var sql = '';
   sql += 'SELECT';

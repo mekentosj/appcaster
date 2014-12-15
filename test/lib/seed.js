@@ -56,6 +56,13 @@ var channels = [{
   language: 'en',
   platform: 'Mac OS X',
   description: 'Alpha releases'
+}, {
+  app_id: 1,
+  url_slug: 'test-ben',
+  title: 'gamma',
+  language: 'en',
+  platform: 'Mac OS X',
+  description: 'Gamma releases'
 }];
 
 var releases = [{

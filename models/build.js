@@ -1,5 +1,6 @@
 var async = require('async');
 var App = require('./app');
+var Channel = require('./channel');
 var db = require('./../db');
 var Release = require('./release');
 var sql = require('sql');
@@ -37,6 +38,9 @@ Build.countDownload = function(build) {
 };
 
 Build.createWithAppUrl = function(urlSlug, buildFields, cb) {
+  var channels = buildFields.channels;
+  delete buildFields.channels;
+
   App.findByUrlSlug(urlSlug, function(err, app) {
     var query;
 
@@ -46,7 +50,24 @@ Build.createWithAppUrl = function(urlSlug, buildFields, cb) {
     query = this.schema.insert(buildFields).returning('*').toQuery();
 
     db.query(query.text, query.values, function(err, result) {
-      cb(err, result && result.rows ? result.rows[0] : null);
+      var build = result && result.rows ? result.rows[0] : null;
+
+      // Release if any channels have been specified
+      if (channels && channels.length && build) {
+        Channel.getIdsForNames(app.id, channels, function(err, channelIds) {
+          if (err) return cb(err);
+
+          if (channelIds && channelIds.length) {
+            Build.updateReleasesForBuildId(build.id, channelIds, function() {
+              cb(null, build);
+            });
+          } else {
+            cb(null, build);
+          }
+        });
+      } else {
+        cb(err, build);
+      }
     });
   }.bind(this));
 };

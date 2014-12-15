@@ -1,5 +1,6 @@
 var assert = require('assert');
 var app = require('./../../app');
+var Channel = require('./../../models/channel');
 var request = require('supertest');
 
 var lastVersion = 16;
@@ -58,5 +59,24 @@ describe('build routes', function() {
       .post('/apps/papers/builds')
       .send(makeBuildFields())
       .expect(401, done);
+  });
+
+  it('should assign builds to channels when channels are specified', function(done) {
+    fields = makeBuildFields();
+    fields.channels = ['test-abc', 'test-ben'];
+
+    request(app)
+      .post('/apps/papers/builds')
+      .auth('gorm', 'password')
+      .send(fields)
+      .expect(200)
+      .end(function(err, res) {
+        if (err) return done(err);
+        assert.equal(res.body.filename, fields.filename);
+        Channel.findAllForBuild(res.body.id, function(err, channels) {
+          assert.equal(channels.length, fields.channels.length);
+          done();
+        });
+      });
   });
 });
